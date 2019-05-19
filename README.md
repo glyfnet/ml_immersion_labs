@@ -1,2 +1,2 @@
 # ml_immersion_labs
-Machine Leanring Immersion Labs
+Machine Learning Immersion Labs
