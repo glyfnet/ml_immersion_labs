@@ -12,6 +12,7 @@ from bokeh.application import Application
 import numpy as np
 import pandas as pd
 import json
+from random import randint
   
 
 region = boto3.Session().region_name
@@ -19,8 +20,10 @@ sage_client = boto3.Session().client('sagemaker')
 s3 = boto3.resource('s3')
 
 def training_status(job_name):
+
     client = boto3.client(service_name='sagemaker')
     status = None
+    time.sleep(randint(0,10)) 
     while status is None or status == 'InProgress':
         status_obj = client.describe_training_job(TrainingJobName=job_name) 
         status = status_obj['TrainingJobStatus']
@@ -29,7 +32,7 @@ def training_status(job_name):
         sys.stdout.write("Training job {} status: {} - {}               \r".format(job_name, status, substatus))
         sys.stdout.flush()
 
-        time.sleep(1)
+        time.sleep(10)
 
 def visualize_detection(img_file, dets, classes=[], thresh=0.6, bboxes=[]):
         """
